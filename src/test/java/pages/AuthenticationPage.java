@@ -6,7 +6,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import tests.GeneralMethods;
 
-public class AuthenticationPage extends GeneralMethods {
+public class AuthenticationPage {
     private WebDriver driver;
 
     public AuthenticationPage(WebDriver driver){
