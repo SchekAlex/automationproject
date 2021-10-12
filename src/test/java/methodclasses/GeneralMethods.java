@@ -10,8 +10,20 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
+import java.util.Random;
 
 public class GeneralMethods {
+
+    private String emailAddress;
+    private String password;
+
+    public String getEmailAddress() {
+        return emailAddress;
+    }
+
+    public String getPassword() {
+        return password;
+    }
 
     public void waitForElement(WebDriver driver, WebElement element){
         WebDriverWait wait = new WebDriverWait(driver,40);
@@ -28,6 +40,16 @@ public class GeneralMethods {
         InputStream fisier = new FileInputStream("C:\\Users\\AlexandruSchek\\IdeaProjects\\automationproject\\src\\test\\resources\\app.properties");
         property.load(fisier);
         return property;
+    }
+
+    public String generateEmail(){
+        emailAddress = "schek.alex"+new Random().nextInt(999999) + "@gmail.com";
+        return emailAddress;
+    }
+
+    public String generatePassword(){
+        password = "Parola&" + new Random().nextInt(999999);
+        return password;
     }
 
 

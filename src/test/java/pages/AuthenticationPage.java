@@ -1,5 +1,6 @@
 package pages;
 
+import methodclasses.GeneralMethods;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -13,6 +14,7 @@ public class AuthenticationPage {
         PageFactory.initElements(driver, this);
     }
 
+
     @FindBy(xpath = "//*[@id=\"SubmitCreate\"]")
     private WebElement createAccountButton;
 
@@ -21,6 +23,9 @@ public class AuthenticationPage {
 
     @FindBy(xpath = "//*[@id=\"SubmitCreate\"]/span/i")
     private WebElement createAccountText;
+
+    @FindBy(xpath = "//*[@id=\"email_create\"]")
+    private WebElement emailField;
 
     public WebElement getCreateAccountButton() {
         return createAccountButton;
@@ -33,4 +38,13 @@ public class AuthenticationPage {
     public WebElement getCreateAccountText() {
         return createAccountText;
     }
+
+    public void insertEmail(String email){
+        emailField.sendKeys(email);
+    }
+
+    public void pressCreateAccountButton(){
+        createAccountButton.click();
+    }
+
 }

@@ -18,6 +18,7 @@ public class Tests extends GeneralMethods {
     public void setUp(){
         System.setProperty("webdriver.chrome.driver", "C:\\Users\\AlexandruSchek\\IdeaProjects\\automationproject\\chromedriver.exe");
         driver = new ChromeDriver();
+        driver.manage().window().maximize();
     }
 
     @Test
@@ -27,6 +28,8 @@ public class Tests extends GeneralMethods {
         home.pressSignInButton();
         waitForElement(driver,authPage.getCreateAccountButton());
         assertTextfromElement(authPage.getpEmailText(),loadFile().getProperty("pTextOnEmailField"));
+        authPage.insertEmail(generateEmail());
+        authPage.pressCreateAccountButton();
 
     }
 
