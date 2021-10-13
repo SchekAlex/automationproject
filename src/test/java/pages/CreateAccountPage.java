@@ -1,13 +1,23 @@
 package pages;
 
 import methodclasses.GeneralMethods;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.Select;
+import org.testng.Assert;
 
 import java.io.IOException;
 
 public class CreateAccountPage extends GeneralMethods {
+
+    private WebDriver driver;
+
+    public CreateAccountPage(WebDriver driver){
+        this.driver=driver;
+        PageFactory.initElements(driver,this);
+    }
 
     @FindBy(id ="id_gender1")
     private WebElement titleElement;
@@ -27,17 +37,11 @@ public class CreateAccountPage extends GeneralMethods {
     @FindBy(id = "days")
     private WebElement daysDropdown;
 
-    private Select selectDaysDropdown = new Select(daysDropdown);
-
     @FindBy(id ="months")
     private WebElement monthsDropdown;
 
-    private Select selectMonthsDropdown = new Select(monthsDropdown);
-
     @FindBy(id = "years")
     private WebElement yearsDropdown;
-
-    private Select selectYearsDropdown = new Select(yearsDropdown);
 
     @FindBy(id = "firstname")
     private WebElement firstNameAddressField;
@@ -56,8 +60,6 @@ public class CreateAccountPage extends GeneralMethods {
 
     @FindBy(id = "id_state")
     private WebElement stateField;
-
-    private Select selectStateField = new Select(stateField);
 
     @FindBy(id = "postcode")
     private WebElement postCodeField;
@@ -80,19 +82,44 @@ public class CreateAccountPage extends GeneralMethods {
     @FindBy(xpath = "//*[@class=\"alert alert-danger\"]/p")
     private WebElement errorText;
 
+    private Select selectDaysDropdown = new Select(daysDropdown);
+
+    private Select selectMonthsDropdown = new Select(monthsDropdown);
+
+    private Select selectYearsDropdown = new Select(yearsDropdown);
+
+    private Select selectStateDropdown = new Select(stateField);
 
     public void completeSignUpForm() throws IOException {
+        waitForElement(driver,registerButton);
         titleElement.click();
         firstNameField.sendKeys(loadFile().getProperty("firstNameField"));
         lastNameField.sendKeys(loadFile().getProperty("lastNameField"));
         passwordField.sendKeys(generatePassword());
-        selectDaysDropdown.selectByValue("12");
-        selectMonthsDropdown.selectByValue("1");
-        selectYearsDropdown.selectByValue("1999");
+        selectDaysDropdown.selectByVisibleText("12");
+        selectMonthsDropdown.selectByVisibleText("1");
+        selectYearsDropdown.selectByVisibleText("1999");
         firstNameAddressField.sendKeys(loadFile().getProperty("firstNameField"));
         lastNameAddressField.sendKeys(loadFile().getProperty("lastNameField"));
-        companyField.sendKeys(loadFile().getProperty(""));
+        companyField.sendKeys(loadFile().getProperty("companyField"));
+        addressField.sendKeys(loadFile().getProperty("addressField"));
+        cityField.sendKeys(loadFile().getProperty("cityField"));
+        selectStateDropdown.selectByVisibleText("7");
+        postCodeField.sendKeys(loadFile().getProperty("zipCodeField"));
+        additInfo.sendKeys(loadFile().getProperty("additionalInfo"));
+        mobPhoneField.sendKeys(loadFile().getProperty("mobilePhoneField"));
+        addressAliasField.sendKeys(loadFile().getProperty("addressAlias"));
+        registerButton.click();
     }
 
+    public void clickRegisterButton() {
+        registerButton.click();
+    }
 
+    public void checkErrorMessage() throws IOException{
+        waitForElement(driver,registerButton);
+        registerButton.click();
+        waitForElement(driver,registerButtonText);
+        assertTextfromElement(registerButtonText, loadFile().getProperty("8errorsText"));
+    }
 }

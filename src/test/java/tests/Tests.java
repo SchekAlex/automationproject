@@ -6,6 +6,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 import pages.AuthenticationPage;
+import pages.CreateAccountPage;
 import pages.HomePage;
 
 import java.io.IOException;
@@ -25,11 +26,14 @@ public class Tests extends GeneralMethods {
     public void signUpFlow() throws IOException {
         HomePage home = new HomePage(driver);
         AuthenticationPage authPage = new AuthenticationPage(driver);
+        CreateAccountPage creAccPage = new CreateAccountPage(driver);
         home.pressSignInButton();
         waitForElement(driver,authPage.getCreateAccountButton());
         assertTextfromElement(authPage.getpEmailText(),loadFile().getProperty("pTextOnEmailField"));
         authPage.insertEmail(generateEmail());
         authPage.pressCreateAccountButton();
+        creAccPage.checkErrorMessage();
+        creAccPage.completeSignUpForm();
 
     }
 
