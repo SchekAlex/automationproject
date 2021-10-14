@@ -3,6 +3,7 @@ package methodclasses;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
@@ -42,6 +43,11 @@ public class GeneralMethods {
         return property;
     }
 
+    public String accessLineInProperty  (String field)throws IOException{
+        String returnValue = loadFile().getProperty(field);
+        return returnValue;
+    }
+
     public String generateEmail(){
         emailAddress = "schek.alex"+new Random().nextInt(999999) + "@gmail.com";
         return emailAddress;
@@ -52,5 +58,9 @@ public class GeneralMethods {
         return password;
     }
 
+    public void selectElem(WebElement webElem,String value){
+        Select dropdown = new Select(webElem);
+        dropdown.selectByValue(value);
+    }
 
 }

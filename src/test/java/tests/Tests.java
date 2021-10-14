@@ -35,6 +35,7 @@ public class Tests extends GeneralMethods {
         creAccPage.checkErrorMessage();
         creAccPage.completeSignUpForm();
 
+
     }
 
 }

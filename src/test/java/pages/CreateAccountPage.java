@@ -82,44 +82,38 @@ public class CreateAccountPage extends GeneralMethods {
     @FindBy(xpath = "//*[@class=\"alert alert-danger\"]/p")
     private WebElement errorText;
 
-    private Select selectDaysDropdown = new Select(daysDropdown);
-
-    private Select selectMonthsDropdown = new Select(monthsDropdown);
-
-    private Select selectYearsDropdown = new Select(yearsDropdown);
-
-    private Select selectStateDropdown = new Select(stateField);
-
     public void completeSignUpForm() throws IOException {
+
         waitForElement(driver,registerButton);
         titleElement.click();
         firstNameField.sendKeys(loadFile().getProperty("firstNameField"));
         lastNameField.sendKeys(loadFile().getProperty("lastNameField"));
         passwordField.sendKeys(generatePassword());
-        selectDaysDropdown.selectByVisibleText("12");
-        selectMonthsDropdown.selectByVisibleText("1");
-        selectYearsDropdown.selectByVisibleText("1999");
+        selectElem(daysDropdown,"12");
+        selectElem(monthsDropdown,"1");
+        selectElem(yearsDropdown,"1999");
         firstNameAddressField.sendKeys(loadFile().getProperty("firstNameField"));
         lastNameAddressField.sendKeys(loadFile().getProperty("lastNameField"));
         companyField.sendKeys(loadFile().getProperty("companyField"));
         addressField.sendKeys(loadFile().getProperty("addressField"));
         cityField.sendKeys(loadFile().getProperty("cityField"));
-        selectStateDropdown.selectByVisibleText("7");
+        selectElem(stateField,"7");
         postCodeField.sendKeys(loadFile().getProperty("zipCodeField"));
         additInfo.sendKeys(loadFile().getProperty("additionalInfo"));
         mobPhoneField.sendKeys(loadFile().getProperty("mobilePhoneField"));
         addressAliasField.sendKeys(loadFile().getProperty("addressAlias"));
-        registerButton.click();
+        clickRegisterButton();
     }
 
     public void clickRegisterButton() {
+        waitForElement(driver,registerButton);
         registerButton.click();
     }
 
     public void checkErrorMessage() throws IOException{
         waitForElement(driver,registerButton);
         registerButton.click();
-        waitForElement(driver,registerButtonText);
-        assertTextfromElement(registerButtonText, loadFile().getProperty("8errorsText"));
+        waitForElement(driver,errorText);
+        assertTextfromElement(errorText, loadFile().getProperty("8errorsText"));
     }
 }
